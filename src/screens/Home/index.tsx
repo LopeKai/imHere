@@ -1,14 +1,33 @@
-import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { useState } from 'react'
+import { View, Text, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native'
 
 import { Participant } from '../../components/Participant'
 
 import { styles } from './styles'
 
 export function Home() {
-    const participants = ['Rodrigo Valentin', 'Vini pereira', 'Beatriz fernanda', 'Karen Araujo', 'Felipe souza', 'João Silva', 'Mayk Brito', 'Renan Silva', 'Victoria pereira', 'Ana nieman', 'Neuza silva', 'Tia Maria']
+    const [participants, setParticipants] = useState<string[]>([])
+    const [participantName, setParticipantName] = useState('')
 
-    function handleParticipantAdd(name: string) {
-        console.log(`Removido ${name}`)
+    function handleParticipantAdd() {
+        if(participants.includes(participantName)) {
+            return Alert.alert("convidado existe", "Já existe esse convidado na lista.")
+        }
+        setParticipants(prevState => [...prevState,participantName])
+        setParticipantName("")
+    }
+
+    function handleParticipantRemove(name: string) {
+        Alert.alert("Remover", `Tem certeza que deseja remover o convidado(a) ${name}?`,[
+            {
+                text: "Sim",
+                onPress: () => Alert.alert("Excluido!")
+            },
+            {
+                text: "Não",
+                style: 'cancel'
+            }
+        ])
     }
 
     return (
@@ -26,9 +45,11 @@ export function Home() {
                     style={styles.input}
                     placeholder="Nome do convidado"
                     placeholderTextColor="#6b6b6b"
+                    onChangeText={setParticipantName}
+                    value={participantName}
                 />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleParticipantAdd}>
                     <Text style={styles.buttonText}>+</Text>
                 </TouchableOpacity>
             </View>
@@ -45,7 +66,7 @@ export function Home() {
                 renderItem={({ item }) => (
                     <Participant 
                         name={item} 
-                        onRemove={() => handleParticipantAdd(item)} 
+                        onRemove={() => handleParticipantRemove(item)} 
                     />
                 )}
             />
