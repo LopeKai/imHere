@@ -21,7 +21,7 @@ export function Home() {
         Alert.alert("Remover", `Tem certeza que deseja remover o convidado(a) ${name}?`,[
             {
                 text: "Sim",
-                onPress: () => Alert.alert("Excluido!")
+                onPress: () => setParticipants(prevState => prevState.filter(participant => participant !== name))
             },
             {
                 text: "Não",
@@ -33,7 +33,7 @@ export function Home() {
     return (
         <View style={styles.container}>
             <Text style={styles.eventName}>
-                Niver do Kaique
+                Aniversário do Kaique
             </Text>
 
             <Text style={styles.eventDate}>
@@ -43,7 +43,7 @@ export function Home() {
             <View style={styles.form}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Nome do convidado"
+                    placeholder="Adicionar convidado"
                     placeholderTextColor="#6b6b6b"
                     onChangeText={setParticipantName}
                     value={participantName}
