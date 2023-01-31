@@ -7,6 +7,7 @@ p> Um App de confirmação de presença.</p>
 <h2> Tecnologias / Bibliotecas: </h2>
 
 + React-Native
++ Typescript
 
 <h1> Home </h1>
 
